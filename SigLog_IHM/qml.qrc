@@ -1,0 +1,68 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+    </qresource>
+    <qresource prefix="/common">
+        <file>common/Background.qml</file>
+        <file>common/BlueBox.qml</file>
+        <file>common/Box.qml</file>
+        <file>common/GreenBox.qml</file>
+        <file>common/RedBox.qml</file>
+        <file>common/Tracer.qml</file>
+        <file>common/YellowBox.qml</file>
+    </qresource>
+    <qresource prefix="/component">
+        <file>component/ControlLabel.qml</file>
+        <file>component/ControlView.qml</file>
+        <file>component/ControlViewToolbar.qml</file>
+        <file>component/CustomizerLabel.qml</file>
+        <file>component/CustomizerSlider.qml</file>
+        <file>component/CustomizerSwitch.qml</file>
+        <file>component/MainForm.ui.qml</file>
+        <file>component/MIB.qml</file>
+        <file>component/PainelLateral.qml</file>
+        <file>component/PainelRodape.qml</file>
+        <file>component/PainelTopo.qml</file>
+        <file>component/TreeViewCustom.qml</file>
+        <file>component/ToolButtonCustom.qml</file>
+        <file>component/ButtonCustom.qml</file>
+        <file>component/PainelLateralCustom.qml</file>
+        <file>component/MibObj.qml</file>
+        <file>component/FileTransfer.qml</file>
+        <file>component/BIT.qml</file>
+        <file>component/FileSystemView.qml</file>
+    </qresource>
+    <qresource prefix="/image">
+        <file>image/icon-back.png</file>
+        <file>image/icon-go.png</file>
+        <file>image/icon-settings.png</file>
+        <file>image/info.png</file>
+        <file>image/zoom_in.png</file>
+        <file>image/zoom_out.png</file>
+        <file>image/blue.png</file>
+        <file>image/blue.svg</file>
+        <file>image/done_blue.png</file>
+        <file>image/done_blue.svg</file>
+        <file>image/done_green.png</file>
+        <file>image/done_green.svg</file>
+        <file>image/done_red.png</file>
+        <file>image/done_red.svg</file>
+        <file>image/done_yellow.png</file>
+        <file>image/done_yellow.svg</file>
+        <file>image/green.png</file>
+        <file>image/green.svg</file>
+        <file>image/note.png</file>
+        <file>image/note.svg</file>
+        <file>image/red.png</file>
+        <file>image/red.svg</file>
+        <file>image/yellow.png</file>
+        <file>image/yellow.svg</file>
+        <file>image/toolbutton.sci</file>
+        <file>image/toolbutton.png</file>
+        <file>image/cloudy.png</file>
+    </qresource>
+    <qresource prefix="/javaScript">
+        <file>javaScript/NodeListHelper.js</file>
+        <file>javaScript/MyScript.js</file>
+    </qresource>
+</RCC>

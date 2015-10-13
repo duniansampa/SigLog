@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>component/BlackButton.qml</file>
+        <file>component/ControlLabel.qml</file>
+        <file>component/ControlView.qml</file>
+        <file>component/ControlViewToolbar.qml</file>
+        <file>component/CustomizerLabel.qml</file>
+        <file>component/CustomizerSlider.qml</file>
+        <file>component/CustomizerSwitch.qml</file>
+        <file>component/MainForm.ui.qml</file>
+        <file>component/PainelLateral.qml</file>
+        <file>component/PainelRodape.qml</file>
+        <file>component/PainelTopo.qml</file>
+    </qresource>
+</RCC>
