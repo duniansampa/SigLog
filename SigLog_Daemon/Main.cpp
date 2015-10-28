@@ -1,29 +1,34 @@
+#include <QCoreApplication>
+
 #include <iostream>
 
 using namespace std;
 
-//#include "../SDK/Base_Lib.h"
-//#include "../SDK"
+#include "../SDK/Base_Lib.h"
+#include "../SDK/BaseIncludes.h"
 
-//#include "Agent.h"
+#include "Agent.h"
 
 
-int main()
+int main(int argc, char *argv[])
 {
 
-    cout << "Dunian Coutinho Sampa" << endl;
 
-    //Barrier * mainBarrier = new Barrier(3);
-    /*
+    QCoreApplication a(argc, argv);
+
+
+    Barrier * mainBarrier = new Barrier(3);
+
     Agent agent(mainBarrier);
 
     if (agent.start() == Thread::SUCCESS){
        cout<<"Agent started successfully. "<<endl;
     }else{
-        cout<<"Erro: Agent no started successfully. "<<endl;
+        cout<<"Error: Agent no started successfully. "<<endl;
     }
-  */
-  //  mainBarrier->wait();
 
-    return 0;
+    mainBarrier->wait();
+
+
+    return a.exec();
 }

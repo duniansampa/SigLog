@@ -10,7 +10,7 @@
  * \pre       Have a Linux and C/C++ environment configured.
  * \bug       No bug.
  * \warning   N/A
- * \copyright EDL_COM LTDA.
+ * \copyright MECTRON LTDA.
  */
 
 //! \brief These are the default C++ includes.

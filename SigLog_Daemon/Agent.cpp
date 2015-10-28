@@ -15,8 +15,10 @@ Agent::Agent(Barrier * mainBarrier)
 
     this->_MainBarrier = mainBarrier;
 
-    this->_SubAgent 	   =  new SubAgent() ;
+    this->_SubAgent 	   =  new SubAgent();
     this->_AgentParameters =  new AgentParameters("/tmp/SystemConfig.xml");
+    this->_MibManager = new MibManager();
+
 }
 
 Agent::~Agent(){
@@ -68,14 +70,14 @@ void Agent::initAgent(){
       netsnmp_ds_set_boolean(NETSNMP_DS_APPLICATION_ID, NETSNMP_DS_AGENT_ROLE, 1);
     }
 
-
+    netsnmp_ds_set_boolean(NETSNMP_DS_APPLICATION_ID, NETSNMP_DS_AGENT_NO_ROOT_ACCESS, 1);
     netsnmp_ds_set_string(NETSNMP_DS_APPLICATION_ID, NETSNMP_DS_AGENT_X_SOCKET, "tcp:localhost:705");
 
     // initialize tcpip, if necessary
     SOCK_STARTUP;
 
     // initialize the agent library
-    init_agent("");
+    init_agent("snmpd");
 
 
     //mib code:
@@ -89,7 +91,7 @@ void Agent::initAgent(){
     }
 
     // Agent will be used to read AgentConfig.conf files.
-     init_snmp("");
+     init_snmp("snmpd");
 
     // If we're going to be a snmp master agent, initial the ports
     if (this->_AgentParameters->getOperationMode() == AgentParameters::_MASTER_AGENT_){
@@ -102,6 +104,8 @@ void Agent::initAgent(){
     signal(SIGINT,  Agent::stopServer);
 
     snmp_log(LOG_INFO,"Agent is up and running.\n");
+
+    this->_MibManager->print();
 
 }
 

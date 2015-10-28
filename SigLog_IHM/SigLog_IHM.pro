@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets xml declarative
+QT += qml quick widgets xml
 
 CONFIG += C++14
 

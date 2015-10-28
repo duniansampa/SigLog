@@ -7,6 +7,7 @@
 
 #include "SubAgent.h"
 #include "AgentParameters.h"
+#include "MibManager.h"
 
 #include <net-snmp/net-snmp-config.h>
 #include <net-snmp/net-snmp-features.h>
@@ -33,6 +34,7 @@ private:
     Barrier * _SynchronizedBarrier;
     AgentParameters * _AgentParameters;
     SubAgent * _SubAgent;
+    MibManager * _MibManager;
     static int _Keep_Running;
     static char *_AppName;
 
