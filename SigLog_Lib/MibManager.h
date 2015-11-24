@@ -8,19 +8,25 @@
 #include <QDir>
 #include <QDebug>
 
+class MibTreeModel;
+
 class MibManager
 {
 public:
-    MibManager(const char * mibFileName);
+    MibManager(const char * mibFileFullPath, bool isPrintToFile);
     ~MibManager();
 
     void print();
-    void loadMib();
+    int loadMib();
     void print_oid_report();
 
     static string type2string(int control);
     static string acess2string(int control);
     static string status2string(int control);
+
+    void printToFunction();
+
+    void setFunction(MibTreeModel * mibTreeModel, void  (MibTreeModel:: * ptrFunc)(const QString & moduleName, const struct tree * pt, QString & oid));
 
     bool isPrint_labeledoid;
     bool isPrint_oid;
@@ -28,20 +34,25 @@ public:
     bool isPrint_mibchildoid;
     bool isPrint_suffix;
     bool isPrint_custom;
+    bool isPrint_function;
 
-private:
+protected:
     string print_parent_labeledoid(struct tree *, stringstream * ss =  new stringstream());
     string print_parent_oid(struct tree *, stringstream * ss =  new stringstream());
     string print_parent_mibchildoid(struct tree *, stringstream * ss =  new stringstream());
     string print_parent_label(struct tree *, stringstream * ss =  new stringstream());
     void print_subtree_oid_report(struct tree *, int);
 
-    QFile         _OutFile;
+private:
+    QFile       * _OutFile;
     struct tree * _PtrTree;
-    const char  * _MibFullPath;
     QFileInfo   * _MibFileInfo;
     QTextStream   _Fout;
     int _ModId;
+    MibTreeModel * _PrtMibTreeModel;
+    void  (MibTreeModel:: * _PtrMibFunction)(const QString &, const struct tree *, QString & oid);
+
+    ;
 };
 
 #endif // MIB_MANAGER_H

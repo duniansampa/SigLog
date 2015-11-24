@@ -6,7 +6,6 @@
 #include "SubAgent.h"
 #include "AgentParameters.h"
 #include <MibManager.h>
-#include <SigLog_Lib.h>
 
 #include <QObject>
 #include <QThread>

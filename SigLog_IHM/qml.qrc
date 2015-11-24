@@ -20,7 +20,6 @@
         <file>component/CustomizerSwitch.qml</file>
         <file>component/MainForm.ui.qml</file>
         <file>component/MIB.qml</file>
-        <file>component/PainelLateral.qml</file>
         <file>component/PainelRodape.qml</file>
         <file>component/PainelTopo.qml</file>
         <file>component/TreeViewCustom.qml</file>
@@ -30,7 +29,6 @@
         <file>component/MibObj.qml</file>
         <file>component/FileTransfer.qml</file>
         <file>component/BIT.qml</file>
-        <file>component/FileSystemView.qml</file>
     </qresource>
     <qresource prefix="/image">
         <file>image/icon-back.png</file>
@@ -62,7 +60,6 @@
         <file>image/cloudy.png</file>
     </qresource>
     <qresource prefix="/javaScript">
-        <file>javaScript/NodeListHelper.js</file>
         <file>javaScript/MyScript.js</file>
     </qresource>
 </RCC>

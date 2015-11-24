@@ -1,74 +1,67 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.4
+import QtQuick.Layouts 1.2
+
 
 import "qrc:/common/common"
 
+import "qrc:/javaScript/javaScript/MyScript.js" as MyScript
+
 import myCLibs 1.0
 
+TreeView {
+    id: treeView
+    property int iconRole;
 
-Rectangle{
-    id: box
-
-    property alias model: thisTreeView.model
-
-    TreeView {
-        id: thisTreeView
-        anchors.fill: parent
-        //backgroundVisible: false
-        alternatingRowColors: false
-        //property int size: 32
-        model: TreeModel {
-            id: treeModel
-        }
-        headerDelegate: TextField{
-            readOnly  : false
-            placeholderText: qsTr("Search")
-
-        }
+    rowDelegate:Rectangle{
+        id: rowDelegate
+        color: "white"
+        height: 19
+    }
+    itemDelegate: Rectangle{
+           id: delegate
+           color: styleData.selected ? "lightsteelblue": "white"
 
 
-        rowDelegate:Rectangle{
-            id: rowDelegate
-            color: "white"
-        }
-        itemDelegate: Rectangle{
-               color: styleData.selected ? "lightsteelblue": "white"
-               Row {
-                  // Image {
-                  //     id: image
-                   //    scale: 0.5
-                   //    source: styleData.hasChildren ? "qrc:/image/image/blue.png" : "qrc:/image/image/note.png"
+           Row {
+                 id: itemRow
+                 spacing: 4
 
-                   //}
-                   Text {
-                       color: styleData.textColor
-                       elide: styleData.elideMode
-                       verticalAlignment: Text.AlignVCenter
-                       text: styleData.value === undefined ? "" : styleData.value
-                   }
-               }
-        }
-        TableViewColumn {
-            role: "name_role"
-            title: "Name"
-            width: treeView.width
-        }
+                 property var img;
+                 property var txt;
+                 property var value: styleData.value
+                 property var column: styleData.column
+                 property var row: styleData.row
+                 property var index: styleData.index
+                 property var textColor: styleData.textColor
+                 property var textAlignment: styleData.textAlignment
 
-        onClicked:{
-            //console.log("Box: clicked")
-        }
+                 onValueChanged: {
+                     //logger.log("--> value:" + value);
+                     if( itemRow.txt === undefined && row !== undefined && column !== undefined && value !== undefined && value !== ""){
+                         if(column === 0){
+                             var icon = treeView.model.data(index, treeView.iconRole)
+                             if(icon !== undefined && icon !== null){
+                                ipWrapper.icon = icon
+                                itemRow.img = MyScript.createImageIcon(itemRow, value)
+                             }
+                         }
+                         itemRow.txt = MyScript.createText(itemRow, styleData)
+                       }
 
-        onDoubleClicked:{
-            if(thisTreeView.isExpanded(index))
-                thisTreeView.collapse(index);
-            else{
-                thisTreeView.expand(index)
-            }
-        }
+                 }
+           }
     }
 
-    Component.onCompleted:{
-        thisTreeView.itemd
+    onDoubleClicked:{
+        if(treeView.isExpanded(index)){
+            treeView.collapse(index);
+        }else{
+            treeView.expand(index)
+        }
+    }
+    onCollapsed:{
+    }
+    onExpanded:{
     }
 }
-

@@ -28,7 +28,7 @@ FileSystemModel::FileSystemModel(QObject *parent)
     qRegisterMetaType<FileSystemModel*>("FileSystemModel");
 
     setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot);
-    //setFilter(QDir::AllDirs | QDir::Files | QDir::Hidden | QDir::NoDotAndDotDot);
+    //setFilter(QDir::AllDirs | QDir::Fil_MibFullPathes | QDir::Hidden | QDir::NoDotAndDotDot);
 
     m_roleNameMapping[FileNameRole] = "fileName";
     m_roleNameMapping[FilePathRole] = "filePath";

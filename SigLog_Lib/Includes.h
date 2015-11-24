@@ -18,7 +18,7 @@
 #include <stdio.h>          // printf
 //#include <sys/neutrino.h>	// ConnectServerInfo, MsgSend
 #include <iomanip>          // setfill, setw
-#include <vector>  stdio         // For vector collection
+#include <vector>           // For vector collection
 #include <map>              // For Map collection
 //#include <spawn.h>          // For spawn process
 //#include <process.h>        // For getpid()

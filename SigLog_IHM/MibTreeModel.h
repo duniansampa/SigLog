@@ -22,6 +22,7 @@ class MibTreeModel : public QStandardItemModel
         enum Roles {
 
             MibLabelRole = Qt::UserRole + 100,
+            MibOidRole,
             MibTypeRole,
             MibIconRole,
             MibModidRole,
@@ -41,10 +42,10 @@ class MibTreeModel : public QStandardItemModel
 
         Q_INVOKABLE int role(const QByteArray &roleName) const;
         Q_INVOKABLE virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-        Q_INVOKABLE void addEntry( const QString& moduloName, const struct tree * tp);
+        Q_INVOKABLE void addEntry( const QString& moduloName, const struct tree * tp, QString & oid);
 
 private:
-    QStandardItem* getBranch( const QString& branchName );
+    QStandardItem* getBranch( const QString & parentOid);
     QHash<int, QByteArray> m_roleNameMapping;
 };
 

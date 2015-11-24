@@ -1,65 +1,148 @@
-/*
- * Copyright 2015 ImaginativeThinking
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
-#include "TreeModel.h"
+#include "MibTreeModel.h"
 
-MyTreeModel::MyTreeModel(QObject *parent) :
+MibTreeModel::MibTreeModel(QObject *parent) :
     QStandardItemModel(parent)
 {
 
-    m_roleNameMapping[MyTreeModel_Role_Name] = "name_role";
-    m_roleNameMapping[MyTreeModel_Role_Description] = "description_role";
+    m_roleNameMapping[MibLabelRole] = "mibLabel";
+    m_roleNameMapping[MibOidRole]  = "mibOid";
+    m_roleNameMapping[MibTypeRole] = "mibType";
+    m_roleNameMapping[MibIconRole] = "mibIcon";
+    m_roleNameMapping[MibModidRole] = "mibModaddEntryid";
+    m_roleNameMapping[MibStatusRole] = "mibStatus";
+    m_roleNameMapping[MibAcessRole] = "mibAcess";
+    m_roleNameMapping[MibDescriptionRole] = "mibDescription";
+    m_roleNameMapping[MibReferenceRole] = "mibReference";
+    m_roleNameMapping[MibDefaultValueRole] = "mibDefaultValue";
+    m_roleNameMapping[MibHintRole] = "mibHint";
+    m_roleNameMapping[MibUnitRole] = "mibUnit";
 
-    addEntry( "Option A", "Recommended", "This is Option A" );
-    addEntry( "Option B", "Recommended", "This is Option B" );
-    addEntry( "Option C", "Recommended", "This is Option C" );
-    addEntry( "Option D", "Recommended", "This is Option D" );
+    init_snmp("snmpd");
+    //init_mib_modules();
 
-    addEntry( "Option E", "Optional", "This is Option E" );
-    addEntry( "Option F", "Optional", "This is Option F" );
-    addEntry( "Option G", "Optional", "This is Option G" );
-    addEntry( "Option H", "Optional", "This is Option H" );
 }
 
-void MyTreeModel::addEntry( const QString& name, const QString& type, const QString& description )
+void MibTreeModel::addEntry( const QString & moduloName, const struct tree * tp, QString & oid)
 {
-    auto childEntry = new QStandardItem( name );
-    childEntry->setData( description, MyTreeModel_Role_Description );
 
-    QStandardItem* entry = getBranch( type );
-    entry->appendRow( childEntry );
+    stringstream parentOid;
+    stringstream objetOid;
+
+
+    for(int i = 0 ; i < oid.size(); i++){
+       objetOid << "." << (int) oid[i].cell();
+
+       if(i < oid.size() - 1){
+         parentOid <<"." << (int) oid[i].cell();
+       }
+    }
+
+
+    auto childEntry = new QStandardItem( QString::fromStdString(objetOid.str()));
+    childEntry->setData( QString(tp->label), MibLabelRole );
+    //childEntry->setData( tp->type, MibTypeRole );
+    //childEntry->setData( icon,  MibIconRole);
+    //childEntry->setData( tp->modid,  MibModidRole);
+    //childEntry->setData( tp->status,  MibStatusRole);
+   // childEntry->setData( tp->access, MibAcessRole );
+   //childEntry->setData( tp->description, MibDescriptionRole );
+    //childEntry->setData( tp->reference,  MibReferenceRole);
+   // childEntry->setData( tp->defaultValue,  MibDefaultValueRole);
+    //childEntry->setData( tp->hint,  MibHintRole);
+    //childEntry->setData( tp->units,  MibUnitRole);
+
+    //parentOid = parentOid.size() == 0? "MIB":parentOid;
+    QStandardItem * parentEntry = getBranch( QString::fromStdString(parentOid.str()));
+    if( parentEntry){
+        parentEntry->appendRow( childEntry );
+    }else{
+        this->appendRow( childEntry );
+    }
+}
+QVariant MibTreeModel::data(const QModelIndex & index, int role) const{
+
+    if (!index.isValid()) {
+        return QVariant();
+    }
+    switch (role) {
+
+        case Qt::DisplayRole:
+        case MibOidRole:
+            return QStandardItemModel::data(index, Qt::DisplayRole);
+
+        case MibLabelRole:
+            return QStandardItemModel::data(index, MibLabelRole);
+
+        case MibTypeRole:
+             return QStandardItemModel::data(index, MibTypeRole);
+
+        case Qt::DecorationRole:
+        case MibIconRole:
+             return QStandardItemModel::data(index, Qt::DecorationRole);
+
+        case MibModidRole:
+             return QStandardItemModel::data(index, MibModidRole).toString();
+
+        case MibStatusRole:
+             return QStandardItemModel::data(index, MibStatusRole);
+
+        case MibAcessRole:
+             return QStandardItemModel::data(index,MibAcessRole);
+
+        case MibDescriptionRole:
+             return QStandardItemModel::data(index, MibDescriptionRole);
+
+        case MibReferenceRole:
+              return QStandardItemModel::data(index, MibReferenceRole);
+
+        case MibDefaultValueRole:
+              return QStandardItemModel::data(index, MibDefaultValueRole);
+
+        case MibHintRole:
+              return QStandardItemModel::data(index, MibHintRole);
+
+         case MibUnitRole:
+              return QStandardItemModel::data(index, MibUnitRole);
+        default:
+            break;
+    }
+
+    return QVariant();
 }
 
-QStandardItem *MyTreeModel::getBranch(const QString &branchName)
+
+int MibTreeModel::role(const QByteArray &roleName) const
 {
-    QStandardItem* entry;
-    auto entries = this->findItems( branchName );
+    QMetaEnum e = metaObject()->enumerator(metaObject()->indexOfEnumerator("Roles"));
+    Q_ASSERT(e.isValid());
+    return e.keyToValue(roleName);
+}
+
+
+QStandardItem *MibTreeModel::getBranch(const QString & parentOid)
+{
+    QStandardItem* entry = NULL ;
+    auto entries = this->findItems( parentOid, Qt::MatchRecursive, 0);
     if ( entries.count() > 0 )
     {
         entry = entries.at(0);
     }
-    else
-    {
-        entry = new QStandardItem( branchName );
-        this->appendRow( entry );
-    }
     return entry;
 }
 
-QHash<int, QByteArray> MyTreeModel::roleNames() const
+QHash<int, QByteArray> MibTreeModel::roleNames() const
 {
     return m_roleNameMapping;
+}
+
+void MibTreeModel::loadMibToThree(const QString & mibFileFullPath){
+    MibManager * mibManager = new MibManager(mibFileFullPath.toStdString().c_str(), false);
+
+    mibManager->loadMib();
+
+    mibManager->setFunction(this, &MibTreeModel::addEntry);
+    mibManager->printToFunction();
+
+    delete mibManager;
 }

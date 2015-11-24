@@ -2,6 +2,8 @@ import QtQuick 2.4
 
 import "qrc:/common/common"
 
+import myCLibs 1.0
+
 Rectangle{
     id: painel
     width: 72

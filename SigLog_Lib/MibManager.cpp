@@ -1,19 +1,22 @@
 #include "MibManager.h"
 
-MibManager::MibManager(const char * mibFileName)
+MibManager::MibManager(const char * mibFileFullPath, bool isPrintToFile)
 {
 
     this->_PtrTree = NULL;
+    this->_OutFile = NULL;
 
-    this->_MibFullPath = mibFileName;
+    this->_MibFileInfo = new QFileInfo(mibFileFullPath);
 
-    this->_OutFile.setFileName("mibOutS.txt");
+    if(isPrintToFile){
+        this->_OutFile = new QFile();
 
-    this->_OutFile.open(QIODevice::WriteOnly | QIODevice::Text);
+        this->_OutFile->setFileName("Out_" + this->_MibFileInfo->fileName() );
 
-    this->_Fout.setDevice(&this->_OutFile);
+        this->_OutFile->open(QIODevice::WriteOnly | QIODevice::Text);
 
-    this->_MibFileInfo = new QFileInfo(this->_MibFullPath);
+        this->_Fout.setDevice(this->_OutFile);
+    }
 
     this->isPrint_labeledoid  = false;
     this->isPrint_oid         = false;
@@ -21,16 +24,20 @@ MibManager::MibManager(const char * mibFileName)
     this->isPrint_mibchildoid = false;
     this->isPrint_suffix      = false;
     this->isPrint_custom      = false;
+    this->isPrint_function    = false;
 
 }
 
-void MibManager::loadMib(){
-
+int MibManager::loadMib(){
 
     if(!this->_PtrTree){
-        this->_PtrTree = read_mib(this->_MibFullPath);
+
+        add_mibdir(this->_MibFileInfo->absolutePath().toStdString().c_str());
+        this->_PtrTree = read_mib(this->_MibFileInfo->absoluteFilePath().toStdString().c_str());
         this->_ModId = which_module(this->_MibFileInfo->baseName().toStdString().c_str());
     }
+
+    return this->_PtrTree == NULL;
 }
 
 MibManager::~MibManager(){
@@ -39,22 +46,7 @@ MibManager::~MibManager(){
 
 void MibManager::print(){
 
-    oid anOID[MAX_OID_LEN];
-    size_t anOID_len=MAX_OID_LEN;
-
     this->loadMib();
-
-    cout<< "Printing the description " << endl;
-
-    //read_objid("NET-SNMP-EXAMPLES-MIB", anOID, &anOID_len);
-
-    //print_objid(anOID, anOID_len);
-
-    cout << "modulo: "<< which_module("NET-SNMP-EXAMPLES-MIB") << endl;
-
-    //print_description(anOID, anOID_len, 1000);
-
-    cout << "MibDir: "<< netsnmp_get_mib_directory() << endl;
 
     this->isPrint_labeledoid  = false;
     this->isPrint_oid         = false;
@@ -62,10 +54,12 @@ void MibManager::print(){
     this->isPrint_mibchildoid = false;
     this->isPrint_suffix      = false;
     this->isPrint_custom      = true;
+    this->isPrint_function    = false;
 
      this->print_oid_report();
 
-     this->_OutFile.close();
+     if(this->_OutFile)
+        this->_OutFile->close();
 }
 
 void MibManager::print_oid_report()
@@ -95,7 +89,7 @@ string MibManager::print_parent_oid(struct tree *tp, stringstream * ss)
 {
     if (tp) {
         if (tp->parent) {
-            this->print_parent_oid(tp->parent);
+            this->print_parent_oid(tp->parent,ss);
         }
         (*ss) <<"."<< tp->subid;
     }
@@ -103,6 +97,25 @@ string MibManager::print_parent_oid(struct tree *tp, stringstream * ss)
     return (*ss).str();
 }
 
+static QString getObjectOid(struct tree *tp){
+    QString ss;
+    static struct tree *temp;
+    unsigned long elems[100];
+    int elem_cnt = 0;
+    int i = 0;
+    temp = tp;
+    if (temp) {
+        while (temp->parent) {
+                elems[elem_cnt++] = temp->subid;
+                temp = temp->parent;
+        }
+        elems[elem_cnt++] = temp->subid;
+    }
+    for (i = elem_cnt - 1; i >= 0; i--) {
+        ss += (char) elems[i];
+    }
+    return ss;
+}
 
 string MibManager::print_parent_mibchildoid(struct tree *tp, stringstream * ss)
 {
@@ -119,11 +132,8 @@ string MibManager::print_parent_mibchildoid(struct tree *tp, stringstream * ss)
         elems[elem_cnt++] = temp->subid;
     }
     for (i = elem_cnt - 1; i >= 0; i--) {
-        if (i == elem_cnt - 1) {
-            this->_Fout << elems[i];
-        } else {
-            (*ss) <<"."<< elems[i];
-        }
+
+       (*ss) <<"."<< elems[i];
     }
     return (*ss).str();
 }
@@ -179,22 +189,22 @@ void MibManager::print_subtree_oid_report(struct tree *tree, int count)
 
         tp->reported = 1;
 
-        if (this->isPrint_labeledoid) {
+        if (this->isPrint_labeledoid && this->_OutFile) {
             this->_Fout <<  QString::fromStdString( this->print_parent_labeledoid(tp) ) << endl;
         }
-        if (this->isPrint_oid) {
+        if (this->isPrint_oid && this->_OutFile) {
             this->_Fout << QString::fromStdString( this->print_parent_oid(tp) ) << endl;
         }
-        if (this->isPrint_symbolic) {
+        if (this->isPrint_symbolic && this->_OutFile) {
             this->_Fout << QString::fromStdString( this->print_parent_label(tp) ) << endl;
         }
-        if (this->isPrint_mibchildoid) {
+        if (this->isPrint_mibchildoid && this->_OutFile) {
             this->_Fout <<"\"" << tp->label <<"\"\t";
             this->_Fout << "\t\t\"";
             this->_Fout << QString::fromStdString( this->print_parent_mibchildoid(tp) ) << endl;
             this->_Fout << "\"" << endl;
         }
-        if (this->isPrint_suffix) {
+        if (this->isPrint_suffix && this->_OutFile) {
             int i;
             for (i = 0; i < count; i++)
                 this->_Fout <<  "  ";
@@ -209,7 +219,7 @@ void MibManager::print_subtree_oid_report(struct tree *tree, int count)
             this->_Fout << endl;
         }
 
-        if (this->isPrint_custom) {
+        if (this->isPrint_custom && this->_OutFile) {
 
             if(this->_ModId == tp->modid ){
                 QString tab(count, ' ');
@@ -242,13 +252,39 @@ void MibManager::print_subtree_oid_report(struct tree *tree, int count)
                     this->_Fout << tab << "  + hint: "<<tp->hint << endl;
 
                 if (tp->units)
-                    this->_Fout << tab << "  + hint: "<< tp->units  << endl;
+                    this->_Fout << tab << "  + unit: "<< tp->units  << endl;
             }
         }
 
+        if(this->isPrint_function && (this->_ModId == tp->modid) ){
+            if( !this->_OutFile && this->_PrtMibTreeModel && this->_PtrMibFunction){
+                 QString ss = getObjectOid(tp);
+                ( (*_PrtMibTreeModel).*_PtrMibFunction)(_MibFileInfo->baseName(), tp,  ss );
+            }
+        }
 
         this->print_subtree_oid_report(tp->child_list, count);
     }
+}
+
+ void MibManager::printToFunction( ){
+
+     this->loadMib();
+
+     this->isPrint_labeledoid  = false;
+     this->isPrint_oid         = false;
+     this->isPrint_symbolic    = false;
+     this->isPrint_mibchildoid = false;
+     this->isPrint_suffix      = false;
+     this->isPrint_custom      = false;
+     this->isPrint_function    = true;
+
+     this->print_oid_report();
+ }
+
+void MibManager::setFunction(MibTreeModel *mibTreeModel, void (MibTreeModel::*ptrFunc)(const QString &, const tree *, QString & )){
+    this->_PrtMibTreeModel = mibTreeModel;
+    this->_PtrMibFunction = ptrFunc;
 }
 
 string MibManager::type2string(int control){

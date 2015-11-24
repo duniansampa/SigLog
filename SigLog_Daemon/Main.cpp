@@ -1,8 +1,6 @@
 #include <QCoreApplication>
 
 
-//#include "../SDK/BaseIncludes.h"
-
 #include "Agent.h"
 
 

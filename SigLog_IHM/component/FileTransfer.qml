@@ -73,7 +73,6 @@ Background{
                 Layout.minimumWidth: 140
                 Layout.columnSpan: 3
                 Layout.fillWidth: true
-
                 model:["File","System" ]
             }
 
@@ -91,9 +90,10 @@ Background{
                 Layout.fillWidth: true
             }
 
-            FileSystemView {
+            TreeViewCustom {
                 id: localFileSystem
                 model: fsModelLocal
+                iconRole: FileSystemModel.FileIconRole
 
                 Layout.minimumWidth: 140
                 Layout.preferredHeight: 310
@@ -110,9 +110,10 @@ Background{
                     MyScript.createTableColumn(localFileSystem, "Modified", "fileModified", 200);
                 }
             }
-            FileSystemView{
+            TreeViewCustom{
                 id: remoteFileSystem
                 model: fsModelRemote
+                iconRole: FileSystemModel.FileIconRole
 
                 Layout.minimumWidth: 140
                 Layout.preferredHeight: 310

@@ -3,15 +3,29 @@
 
 #include <QObject>
 
+#include <Includes.h>
+
+
 class QmlLogger : public QObject
 {
     Q_OBJECT
 public:
     explicit QmlLogger(QObject *parent = 0);
 
-signals:
+    Q_INVOKABLE void log(const QString& iDataToLog);
 
-public slots:
+    enum Level
+    {
+        Error = 0,
+        Warning,
+        Info,
+        Debug,
+        Trace
+    };
+    Q_ENUMS(Level)
+
+private:
+
 };
 
 #endif // QMLLOGGER_H

@@ -144,7 +144,7 @@ Background{
             }
         }
 
-        FileSystemView{
+        TreeViewCustom{
             id: bitAnalyser
             Layout.minimumWidth: 140
             Layout.minimumHeight: 200
@@ -153,13 +153,13 @@ Background{
             Layout.columnSpan: 8
             Layout.rowSpan: 7
 
-            model: TreeModel {
-            }
+            //model: TreeModel {
+            //}
 
 
             Component.onCompleted: {
-                MyScript.createTableColumn(bitAnalyser, "Name", "name_role", 200)
-                MyScript.createTableColumn(bitAnalyser, "Name", "name_role", 200)
+                //MyScript.createTableColumn(bitAnalyser, "Name", "name_role", 200)
+                //MyScript.createTableColumn(bitAnalyser, "Name", "name_role", 200)
             }
 
         }

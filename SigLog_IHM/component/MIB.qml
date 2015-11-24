@@ -4,7 +4,10 @@ import QtQuick.Layouts 1.2
 
 import "qrc:/common/common"
 
+import "qrc:/javaScript/javaScript/MyScript.js" as MyScript
+
 import myCLibs 1.0
+
 
 Background{
 
@@ -23,11 +26,24 @@ Background{
             Layout.minimumWidth: 200
             Layout.preferredWidth: 200
             Layout.maximumWidth: parent.width/3
-            TreeViewCustom{
-                id: treeView
+
+            TreeViewCustom {
+                id: mibTreeView
+                iconRole: Qt.DecorationRole
                 width: parent.width
                 height: parent.height - toolBar.height
+                model: MibTreeModel{
+                   id: mibTreeModel
+                }
+
+                Component.onCompleted:{
+                   // console.log("------>");
+                    mibTreeModel.loadMibToThree("/usr/share/snmp/mibs/NET-SNMP-EXAMPLES-MIB.txt");
+                    MyScript.createTableColumn(mibTreeView, "Label", "mibLabel", 200);
+
+                }
             }
+
             ToolBar{
                 id: toolBar
                 anchors.bottom: parent.bottom
