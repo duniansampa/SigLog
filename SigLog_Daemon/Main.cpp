@@ -1,11 +1,7 @@
 #include <QCoreApplication>
 
-#include <iostream>
 
-using namespace std;
-
-#include "../SDK/Base_Lib.h"
-#include "../SDK/BaseIncludes.h"
+//#include "../SDK/BaseIncludes.h"
 
 #include "Agent.h"
 
@@ -16,18 +12,17 @@ int main(int argc, char *argv[])
 
     QCoreApplication a(argc, argv);
 
+    Agent * agent = new Agent();
 
-    Barrier * mainBarrier = new Barrier(3);
+    agent->start();
 
-    Agent agent(mainBarrier);
-
-    if (agent.start() == Thread::SUCCESS){
-       cout<<"Agent started successfully. "<<endl;
-    }else{
+    if(agent->isFinished()){
         cout<<"Error: Agent no started successfully. "<<endl;
+    }else{
+        cout<<"Agent started successfully. "<<endl;
     }
 
-    mainBarrier->wait();
+    agent->wait();
 
 
     return a.exec();

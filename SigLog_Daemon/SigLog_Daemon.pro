@@ -7,39 +7,31 @@ SOURCES += \
     Agent.cpp \
     AgentParameters.cpp \
     SubAgent.cpp \
-    ../SDK/Threads/Barrier.cpp \
-    ../SDK/Threads/ConditionVariable.cpp \
-    ../SDK/Threads/Mutex.cpp \
-    ../SDK/Threads/Semaphore.cpp \
-    ../SDK/Threads/SynchronizationService.cpp \
-    ../SDK/Threads/Synchronized.cpp \
-    ../SDK/Threads/Thread.cpp \
-    ../SDK/Base/Object.cpp \
-    ../SDK/Base/String.cpp \
-    MibManager.cpp
 
 HEADERS += \
     Agent.h \
     AgentParameters.h \
-    SubAgent.h \
-    ../SDK/Base_Lib.h \
-    ../SDK/BaseIncludes.h \
-    ../SDK/Threads/Barrier.h \
-    ../SDK/Threads/ConditionVariable.h \
-    ../SDK/Threads/Mutex.h \
-    ../SDK/Threads/Semaphore.h \
-    ../SDK/Threads/SynchronizationService.h \
-    ../SDK/Threads/Synchronized.h \
-    ../SDK/Threads/Thread.h \
-    ../SDK/Base/Base.h \
-    ../SDK/Base/Object.h \
-    ../SDK/Base/String.h \
-    MibManager.h
+    SubAgent.h
 
-QMAKE_CXXFLAGS += -std=c++0x -pthread
-LIBS += -pthread -lnetsnmp -lnetsnmpagent  -lnetsnmpmibs -lnetsnmphelpers
+QMAKE_CXXFLAGS += -std=c++0x
+LIBS += -lnetsnmp -lnetsnmpagent  -lnetsnmpmibs -lnetsnmphelpers
 
 TARGET = SigLog_Daemon
-target.path += /home/root
-target.files += SigLog_Daemon
-INSTALLS += target
+
+unix {
+    target.path += /home/root
+    INSTALLS += target
+}
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-SigLog_Lib-Desktop_Qt_5_5_1_GCC_64bit-Release/release/ -lSigLog_Lib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-SigLog_Lib-Desktop_Qt_5_5_1_GCC_64bit-Release/debug/ -lSigLog_Lib
+else:unix: LIBS += -L$$PWD/../build-SigLog_Lib-Desktop_Qt_5_5_1_GCC_64bit-Release/ -lSigLog_Lib
+
+INCLUDEPATH += $$PWD/../SigLog_Lib
+DEPENDPATH += $$PWD/../SigLog_Lib
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-SigLog_Lib-Desktop_Qt_5_5_1_GCC_64bit-Release/release/libSigLog_Lib.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SigLog_Lib-Desktop_Qt_5_5_1_GCC_64bit-Release/debug/libSigLog_Lib.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-SigLog_Lib-Desktop_Qt_5_5_1_GCC_64bit-Release/release/SigLog_Lib.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-SigLog_Lib-Desktop_Qt_5_5_1_GCC_64bit-Release/debug/SigLog_Lib.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../build-SigLog_Lib-Desktop_Qt_5_5_1_GCC_64bit-Release/libSigLog_Lib.a

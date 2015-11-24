@@ -2,7 +2,7 @@ TEMPLATE = app
 
 QT += qml quick widgets xml
 
-CONFIG += C++14
+CONFIG += C++11
 
 SOURCES += main.cpp \
     Storage.cpp \

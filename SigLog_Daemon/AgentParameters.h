@@ -1,19 +1,7 @@
 #ifndef AGENTPARAMETERS_H
 #define AGENTPARAMETERS_H
 
-
-
-// TinyXML and TinyXPath Includes
-//#include "../SDK/External_Tiny_Lib/tinyxml.h"		// TinyXML
-//#include "../SDK/External_Tiny_Lib/tinystr.h"		// TinyXML
-//#include "../SDK/External_Tiny_Lib/xpath_static.h"	// TinyXPath
-
-// SMC - SDK Includes
-#include "../SDK/Base_Lib.h"
-
-// TinyXPath - Namespace
-//using namespace TinyXPath;  // TinyXML objects
-
+#include <Includes.h>
 
 class AgentParameters
 {
@@ -21,6 +9,8 @@ private:
     string  _XMLConfigurationFullPath;
     int 	_OperationMode;
     int     _PrintLogERROR;
+    string  _SnmpdConfig;
+    string  _SnmptrapdConfig;
 protected:
 
 public:
@@ -47,6 +37,10 @@ public:
     int getOperationMode();
 
     int getPrintLogERROR();
+
+
+    void setSnmpdConfig(string name);
+    string getSnmpdConfig();
 };
 
 #endif // AGENTPARAMETERS_H

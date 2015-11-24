@@ -12,8 +12,10 @@ const int AgentParameters::_SYS_LOG_      = 1;
 
 AgentParameters::AgentParameters(string  xmlConfigurationFullPath){
     this->_XMLConfigurationFullPath = xmlConfigurationFullPath;
-    this->_OperationMode = AgentParameters::_SUB_AGENT_;
+    this->_OperationMode = AgentParameters::_MASTER_AGENT_;
     this->_PrintLogERROR = AgentParameters::_STDERR_LOG_;
+
+    this->setSnmpdConfig("snmpd");
 }
 AgentParameters::~AgentParameters(){
 
@@ -88,4 +90,12 @@ int AgentParameters::getOperationMode(){
 
 int AgentParameters::getPrintLogERROR(){
     return this->_PrintLogERROR;
+}
+
+void AgentParameters::setSnmpdConfig(string name){
+    this->_SnmpdConfig = name;
+}
+
+string AgentParameters::getSnmpdConfig(){
+    return this->_SnmpdConfig;
 }

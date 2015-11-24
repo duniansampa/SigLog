@@ -11,13 +11,12 @@ import QtSensors 5.5
 import QtQuick.LocalStorage 2.0
 import QtLocation 5.5
 import QtTest 1.1
-import QtWebKit 3.0
+//import QtWebKit 3.0
 import QtWebSockets 1.0
 import QtNfc 5.5
 import QtMultimedia 5.5
 import QtWebChannel 1.0
 import QtQuick.Layouts 1.2
-import QtWinExtras 1.0
 import Enginio 1.0
 import QtQuick.Controls.Styles 1.4
 

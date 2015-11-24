@@ -79,3 +79,4 @@ $RECYCLE.BIN/
 */debug/*
 *.pro.user
 *Debug
+*Release

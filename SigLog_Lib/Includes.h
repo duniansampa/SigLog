@@ -1,5 +1,5 @@
-#ifndef BaseIncludes_H_
-#define BaseIncludes_H_
+#ifndef BASE_INCLUDES_H_
+#define BASE_INCLUDES_H_
 
 /*!
  * \brief     Sample application.
@@ -79,4 +79,4 @@
 //! \brief This is the default C++ namespaces.
 using namespace std;
 
-#endif // BaseIncludes_H_
+#endif // BASE_INCLUDES_H_

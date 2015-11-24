@@ -1,30 +1,15 @@
 #ifndef SUBAGENT_H
 #define SUBAGENT_H
 
+#include <Includes.h>
 
 
-#include "../SDK/Base_Lib.h"
+#define CLASS_NAME(n) #n
+#define SHOW(a)  std::cout.precision(10); std::cout << #a << ": " << a << std::endl
 
-#include <net-snmp/net-snmp-config.h>
-#include <net-snmp/net-snmp-features.h>
-#include <net-snmp/net-snmp-includes.h>
-#include <net-snmp/agent/net-snmp-agent-includes.h>
-#include <net-snmp/agent/watcher.h>
-#include <net-snmp/agent/instance.h>
-#include <net-snmp/agent/scalar.h>
-#include <signal.h>
-
+double * ToDoubleVector(char * stringInteger, const char * delimiter, size_t * size);
 
 const oid  VecTrapOid[] = {1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0};
-
-
-//Tipos de variaveis permitidos pelo comando "snmpset"
-
-//TYPE: one of i, u, t, a, o, s, x, d, b
-//i: INTEGER, u: unsigned INTEGER, t: TIMETICKS, a: IPADDRESS
-//o: OBJID, s: STRING, x: HEX STRING, d: DECIMAL STRING, b: BITS
-//U: unsigned int64, I: signed int64, F: float, D: double
-
 
 typedef struct{
 
@@ -82,7 +67,8 @@ public:
             //IPADDRESS
             //Cod: 0x40
             //snmpset -> a: IPADDRESS
-
+#define CLASS_NAME(n) #n
+#define SHOW(a)  std::cout.precision(10); std::cout << #a << ": " << a << std::endl
             this->_Content.string = new u_int8_t[size];
             this->_Type = ASN_IPADDRESS;
             break;
@@ -108,12 +94,13 @@ public:
 
    void setStringOid(char * stringOid){
        size_t size;
-       double * vecDouble =  String::ToDoubleVector(stringOid, " ,.-", &size);
+       double * vecDouble =  ToDoubleVector(stringOid, " ,.-", &size);
        this->_VecOid = new oid [size];
        this->_SizeVecOid = size;
        for(size_t i = 0; i < size; i++){
            this->_VecOid[i] = vecDouble[i];
        }
+
    }
 
    int setContent(char * stringContent, const char * delimiter = " "){
@@ -122,7 +109,7 @@ public:
 
        if( this->_Type != ASN_OCTET_STR){
 
-           vecDouble = String::ToDoubleVector(stringContent, delimiter,  &size);
+           vecDouble = ToDoubleVector(stringContent, delimiter,  &size);
 
            if(size != this->_SizeContent)
                return -1;
@@ -165,7 +152,6 @@ public:
 
            size  = strlen(stringContent);
 
-           SHOW(stringContent);
            if(size > this->_SizeContent)
                return -1;
 
@@ -175,6 +161,36 @@ public:
 
        return 0;
 
+   }
+
+
+   //Return long vector representation of the string separated by delimiter
+   double * ToDoubleVector(char * stringInteger, const char * delimiter, size_t * size){
+
+      char * pch;
+      double * vecDouble = NULL;
+      char buffer[256];
+      vector<double> vec;
+
+      strcpy(buffer, stringInteger);
+
+      pch = strtok(buffer, delimiter);
+      while (pch != NULL)
+      {
+          vec.push_back(stod(pch));
+          pch = strtok (NULL, delimiter);
+      }
+
+      if(size){
+          *size = vec.size();
+      }
+
+      vecDouble = new double [vec.size()];
+
+      for(size_t i = 0 ; i < vec.size(); i++)
+          vecDouble[i] =  vec[i];
+
+      return vecDouble;
    }
 
    size_t getSizeContent(){ return this->_SizeContent;}
@@ -218,5 +234,7 @@ public:
 
 
 };
+
+
 
 #endif // SUBAGENT_H
