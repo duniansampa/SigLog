@@ -20,9 +20,9 @@ public:
     int loadMib();
     void print_oid_report();
 
-    static string type2string(int control);
-    static string acess2string(int control);
-    static string status2string(int control);
+    static QString type2string(int control);
+    static QString acess2string(int control);
+    static QString status2string(int control);
 
     void printToFunction();
 
@@ -52,7 +52,7 @@ private:
     MibTreeModel * _PrtMibTreeModel;
     void  (MibTreeModel:: * _PtrMibFunction)(const QString &, const struct tree *, QString & oid);
 
-    ;
+
 };
 
 #endif // MIB_MANAGER_H

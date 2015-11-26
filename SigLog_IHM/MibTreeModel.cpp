@@ -38,21 +38,19 @@ void MibTreeModel::addEntry( const QString & moduloName, const struct tree * tp,
        }
     }
 
-
     auto childEntry = new QStandardItem( QString::fromStdString(objetOid.str()));
     childEntry->setData( QString(tp->label), MibLabelRole );
-    //childEntry->setData( tp->type, MibTypeRole );
+    childEntry->setData( MibManager::type2string(tp->type), MibTypeRole );
     //childEntry->setData( icon,  MibIconRole);
-    //childEntry->setData( tp->modid,  MibModidRole);
-    //childEntry->setData( tp->status,  MibStatusRole);
-   // childEntry->setData( tp->access, MibAcessRole );
-   //childEntry->setData( tp->description, MibDescriptionRole );
-    //childEntry->setData( tp->reference,  MibReferenceRole);
-   // childEntry->setData( tp->defaultValue,  MibDefaultValueRole);
-    //childEntry->setData( tp->hint,  MibHintRole);
-    //childEntry->setData( tp->units,  MibUnitRole);
+    childEntry->setData( tp->modid,  MibModidRole);
+    childEntry->setData( MibManager::status2string(tp->status),  MibStatusRole);
+    childEntry->setData( MibManager::acess2string(tp->access), MibAcessRole );
+    childEntry->setData( QString( tp->description), MibDescriptionRole );
+    childEntry->setData( QString( tp->reference),  MibReferenceRole);
+    childEntry->setData( QString(tp->defaultValue),  MibDefaultValueRole);
+    childEntry->setData( QString(tp->hint),  MibHintRole);
+    childEntry->setData( tp->units,  MibUnitRole);
 
-    //parentOid = parentOid.size() == 0? "MIB":parentOid;
     QStandardItem * parentEntry = getBranch( QString::fromStdString(parentOid.str()));
     if( parentEntry){
         parentEntry->appendRow( childEntry );

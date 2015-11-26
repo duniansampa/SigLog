@@ -2,7 +2,7 @@ import QtQuick 2.4
 
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.4
 
 import "qrc:/common/common/"
 
@@ -16,11 +16,23 @@ Item {
     opacity: 1
 
     //Operations...
-    property alias get: get
-    property alias getNext: getNext
-    property alias getBulk: getBulk
-    property alias snmpWalk: snmpWalk
-    property alias set: set
+
+    property alias btSave: btSave
+    property alias btClear: btClear
+    property alias taHistory: taHistory
+    property alias taDescription: taDescription
+    property alias tfObjectID: tfObjectID
+    property alias tfIndex: tfIndex
+    property alias tfReference: tfReference
+    property alias tfAccess: tfAccess
+    property alias tfStatus: tfStatus
+    property alias tfSyntax: tfSyntax
+
+    property alias btGet: btGet
+    property alias btGetNext: btGetNext
+    property alias btGetBulk: btGetBulk
+    property alias btSnmpWalk: btSnmpWalk
+    property alias btSet: btSet
 
     property alias gridLayout: gridLayout
 
@@ -45,18 +57,20 @@ Item {
             Layout.columnSpan: 1
         }
         TextField {
-            id: syntax
+            id: tfSyntax
+            readOnly: true
             Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 3
         }
         Label {
-            id: label2
+            id: label2TextArea
             text: qsTr("Status")
             Layout.columnSpan: 1
         }
         TextField {
-            id: status
+            id: tfStatus
+            readOnly: true
             Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 3
@@ -68,7 +82,8 @@ Item {
             Layout.columnSpan: 1
         }
         TextField {
-            id: access
+            id: tfAccess
+            readOnly: true
             Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 3
@@ -79,7 +94,8 @@ Item {
             Layout.columnSpan: 1
         }
         TextField {
-            id: reference
+            id: tfReference
+            readOnly: true
             Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 3
@@ -90,7 +106,8 @@ Item {
             Layout.columnSpan: 1
         }
         TextField {
-            id: index
+            id: tfIndex
+            readOnly: true
             Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 7
@@ -101,7 +118,8 @@ Item {
             Layout.columnSpan: 1
         }
         TextField {
-            id: objectID
+            id: tfObjectID
+            readOnly: true
             Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 7
@@ -115,7 +133,7 @@ Item {
         }
 
         TextArea {
-            id: description
+            id: taDescription
 
             Layout.minimumWidth: 140
             Layout.maximumHeight: 80
@@ -136,33 +154,33 @@ Item {
         anchors.top: gridLayout.bottom
 
         Button {
-            id: get
+            id: btGet
             text: qsTr("Get")
             enabled: false
         }
         Button {
-            id: getNext
+            id: btGetNext
             text: qsTr("Next")
             enabled: false
         }
         Button {
-            id: getBulk
+            id: btGetBulk
             text: qsTr("Bulk")
             enabled: false
         }
         Button {
-            id: snmpWalk
+            id: btSnmpWalk
             text: qsTr("Walk")
             enabled: false
         }
         Button {
-            id: set
+            id: btSet
             text: qsTr("Set")
             enabled: false
         }
     }
     TextArea{
-        id: history
+        id: taHistory
         anchors.top: rowButton.bottom
         anchors.bottom: rowSaveClear.top
         anchors.left: parent.left
@@ -184,12 +202,12 @@ Item {
         anchors.bottom: parent.bottom
 
         Button {
-            id: clear
+            id: btClear
             text: qsTr("Save")
             enabled: false
         }
         Button {
-            id: save
+            id: btSave
             text: qsTr("Clear")
             enabled: false
         }

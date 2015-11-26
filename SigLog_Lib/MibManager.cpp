@@ -228,13 +228,13 @@ void MibManager::print_subtree_oid_report(struct tree *tree, int count)
 
                 this->_Fout << tab << tp->label    <<" : "<< QString::fromStdString(this->print_parent_mibchildoid(tp)) << endl;
 
-                this->_Fout << tab << "  + type: " << QString::fromStdString( MibManager::type2string(tp->type)) << endl;
+                this->_Fout << tab << "  + type: " << MibManager::type2string(tp->type) << endl;
 
                 this->_Fout << tab << "  + modid: " << tp->modid << endl;
 
-                this->_Fout << tab << "  + status: " << QString::fromStdString( MibManager::status2string(tp->status)) << endl;
+                this->_Fout << tab << "  + status: " << MibManager::status2string(tp->status) << endl;
 
-                this->_Fout << tab << "  + access: " << QString::fromStdString( MibManager::acess2string(tp->access)) << endl;
+                this->_Fout << tab << "  + access: " <<  MibManager::acess2string(tp->access) << endl;
 
                 if(tp->augments)
                     this->_Fout << tab << "  + augments: " << tp->augments << endl;
@@ -287,7 +287,7 @@ void MibManager::setFunction(MibTreeModel *mibTreeModel, void (MibTreeModel::*pt
     this->_PtrMibFunction = ptrFunc;
 }
 
-string MibManager::type2string(int control){
+QString MibManager::type2string(int control){
 
 
     stringstream ss;
@@ -400,11 +400,11 @@ string MibManager::type2string(int control){
         ss << "";
         break;
     }
-    return ss.str();
+    return QString(ss.str().c_str());
 }
 
 
-string MibManager::status2string(int control){
+QString MibManager::status2string(int control){
 
 
     stringstream ss;
@@ -434,11 +434,11 @@ string MibManager::status2string(int control){
         ss << "";
         break;
     }
-    return ss.str();
+    return QString(ss.str().c_str());
 }
 
 
-string MibManager::acess2string(int control){
+QString MibManager::acess2string(int control){
 
 
     stringstream ss;
@@ -473,5 +473,5 @@ string MibManager::acess2string(int control){
         ss << "";
         break;
     }
-    return ss.str();
+    return QString(ss.str().c_str());
 }

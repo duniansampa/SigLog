@@ -9,6 +9,7 @@
 #include <QStandardItemModel>
 #include <QMetaObject>
 #include <QMetaEnum>
+#include <MibManager.h>
 
 class MibTreeModel : public QStandardItemModel
 {

@@ -8,7 +8,6 @@ import "qrc:/javaScript/javaScript/MyScript.js" as MyScript
 
 import myCLibs 1.0
 
-
 Background{
 
     SplitView {
@@ -36,10 +35,25 @@ Background{
                    id: mibTreeModel
                 }
 
+                onClicked:{
+                    //index
+                    logger.log("Clicked");
+
+                    mibObj.tfAccess.text = mibTreeModel.data(index, MibTreeModel.MibAcessRole);
+                    mibObj.tfStatus.text = mibTreeModel.data(index, MibTreeModel.MibStatusRole);
+                    //mibTreeModel.data(index, MibTreeModel.MibIn);
+                    mibObj.tfSyntax.text = mibTreeModel.data(index, MibTreeModel.MibTypeRole);
+                    mibObj.tfObjectID.text = mibTreeModel.data(index, MibTreeModel.MibOidRole);
+                    mibObj.tfReference.text = mibTreeModel.data(index, MibTreeModel.MibReferenceRole);
+                    mibObj.taDescription.text = mibTreeModel.data(index, MibTreeModel.MibDescriptionRole);
+
+
+                }
+
                 Component.onCompleted:{
                    // console.log("------>");
                     mibTreeModel.loadMibToThree("/usr/share/snmp/mibs/NET-SNMP-EXAMPLES-MIB.txt");
-                    MyScript.createTableColumn(mibTreeView, "Label", "mibLabel", 200);
+                    MyScript.createTableColumn(mibTreeView, "Módulos Carregados", "mibLabel", 5000);
 
                 }
             }
