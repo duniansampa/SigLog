@@ -16,7 +16,7 @@ TreeView {
     rowDelegate:Rectangle{
         id: rowDelegate
         color: "white"
-        height: 19
+        height: 22
     }
     itemDelegate: Rectangle{
            id: delegate
@@ -26,6 +26,7 @@ TreeView {
            Row {
                  id: itemRow
                  spacing: 4
+                 anchors.fill: parent
 
                  property var img;
                  property var txt;
@@ -37,7 +38,6 @@ TreeView {
                  property var textAlignment: styleData.textAlignment
 
                  onValueChanged: {
-                     //logger.log("--> value:" + value);
                      if( itemRow.txt === undefined && row !== undefined && column !== undefined && value !== undefined && value !== ""){
                          if(column === 0){
                              var icon = treeView.model.data(index, treeView.iconRole)
@@ -56,7 +56,7 @@ TreeView {
     onDoubleClicked:{
         if(treeView.isExpanded(index)){
             treeView.collapse(index);
-        }else{
+        }else{          
             treeView.expand(index)
         }
     }

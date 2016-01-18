@@ -6,23 +6,16 @@ import myCLibs 1.0
 
 Rectangle{
     id: painel
-    width: 72
     color: "#4F4F4F"
-    anchors.left: parent.left
-    anchors.leftMargin: 0
-    anchors.bottom: parent.bottom
-    anchors.bottomMargin: 0
-    anchors.top: parent.top
-    anchors.topMargin: 45
     focus: true
 
     property alias dashboard: buttDashboard.comp
-    property alias helf: buttHelf.comp
+    //property alias helf: buttHelf.comp
     property alias mib: buttMib.comp
     property alias bit: buttBit.comp
     property alias transfer: butTransfer.comp
     property alias config: butConfig.comp
-    property var  listButton: [buttDashboard, buttHelf, buttMib, buttBit, butTransfer, butConfig ]
+    property var  listButton: [buttDashboard,  buttMib, buttBit, butTransfer, butConfig ]
 
     function buttonPainelClicked(name, state, comp){
         if(state !== "CLICKED"){
@@ -51,15 +44,7 @@ Rectangle{
                 RedBox{}
             }
         }
-        ButtonCustom {
-            id: buttHelf
-            width: painel.width
-            source: "qrc:/image/image/cloudy.png"
-            name: qsTr("Helf")
-            comp: Background{
-                 BlueBox{}
-            }
-        }
+
         ButtonCustom {
             id: buttMib
             width: painel.width

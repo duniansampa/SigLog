@@ -2,10 +2,11 @@
 #define AGENT_H
 
 #include <Includes.h>
+#include <MibManager.h>
 
 #include "SubAgent.h"
 #include "AgentParameters.h"
-#include <MibManager.h>
+
 
 #include <QObject>
 #include <QThread>

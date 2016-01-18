@@ -42,6 +42,8 @@ void Agent::run(){
     this->closeAgent();
 
     cout<<"Closed." << endl;
+
+    exit(1);
 }
 
 void Agent::initAgent(){
@@ -88,7 +90,7 @@ void Agent::initAgent(){
 
     if ((ret = init_master_agent()) != 0) {
         /*
-         * Some error opening one of the specified agent transports.
+         * Some error openin    this->_MibManager->print();g one of the specified agent transports.
          */
         snmp_log(LOG_ERR, "Server Exiting with code 1\n");
         exit(1);
@@ -100,7 +102,6 @@ void Agent::initAgent(){
 
     snmp_log(LOG_INFO,"Agent is up and running.\n");
 
-    this->_MibManager->print();
 
 }
 

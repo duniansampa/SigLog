@@ -1,6 +1,7 @@
 #ifndef IMAGEPROVIDERWRAPPER_H
 #define IMAGEPROVIDERWRAPPER_H
 
+
 #include <QObject>
 
 #include "ImageProvider.h"

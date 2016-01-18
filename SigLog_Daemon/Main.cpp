@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
         cout<<"Agent started successfully. "<<endl;
     }
 
+    QObject::connect(agent, SIGNAL(finished()), &a , SLOT(quit()));
+
     agent->wait();
 
 

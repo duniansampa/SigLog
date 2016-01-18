@@ -7,51 +7,46 @@
 #include <QTextStream>
 #include <QDir>
 #include <QDebug>
+#include <QVector>
+#include <QPair>
 
-class MibTreeModel;
-
-class MibManager
+class MibManager: public QObject
 {
+    Q_OBJECT
+
 public:
-    MibManager(const char * mibFileFullPath, bool isPrintToFile);
-    ~MibManager();
+    MibManager(const QString & mibFileFullPath);
+    virtual ~MibManager();
 
-    void print();
+    QVector< struct tree *> & getMibObjects();
+
+    QString getModuleName();
+    int getModuleId();
+
     int loadMib();
-    void print_oid_report();
 
+    static QPair< QVector<unsigned long>, QVector<QString> > getLabeledOid(const struct tree *tp);
     static QString type2string(int control);
     static QString acess2string(int control);
     static QString status2string(int control);
 
-    void printToFunction();
 
-    void setFunction(MibTreeModel * mibTreeModel, void  (MibTreeModel:: * ptrFunc)(const QString & moduleName, const struct tree * pt, QString & oid));
+signals:
+    void nextObjectChanged();
+public slots:
 
-    bool isPrint_labeledoid;
-    bool isPrint_oid;
-    bool isPrint_symbolic;
-    bool isPrint_mibchildoid;
-    bool isPrint_suffix;
-    bool isPrint_custom;
-    bool isPrint_function;
 
 protected:
-    string print_parent_labeledoid(struct tree *, stringstream * ss =  new stringstream());
-    string print_parent_oid(struct tree *, stringstream * ss =  new stringstream());
-    string print_parent_mibchildoid(struct tree *, stringstream * ss =  new stringstream());
-    string print_parent_label(struct tree *, stringstream * ss =  new stringstream());
-    void print_subtree_oid_report(struct tree *, int);
+    void get_oid_report();
+    void get_subtree_oid_report(struct tree *);
+
 
 private:
-    QFile       * _OutFile;
+
     struct tree * _PtrTree;
     QFileInfo   * _MibFileInfo;
-    QTextStream   _Fout;
     int _ModId;
-    MibTreeModel * _PrtMibTreeModel;
-    void  (MibTreeModel:: * _PtrMibFunction)(const QString &, const struct tree *, QString & oid);
-
+    QVector< struct tree *> _VecMibObjects;
 
 };
 

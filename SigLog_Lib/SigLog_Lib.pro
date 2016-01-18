@@ -16,8 +16,4 @@ SOURCES += SigLog_Lib.cpp \
 HEADERS += SigLog_Lib.h \
     MibManager.h \
     Includes.h
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
 

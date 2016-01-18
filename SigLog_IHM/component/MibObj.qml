@@ -30,7 +30,6 @@ Item {
 
     property alias btGet: btGet
     property alias btGetNext: btGetNext
-    property alias btGetBulk: btGetBulk
     property alias btSnmpWalk: btSnmpWalk
     property alias btSet: btSet
 
@@ -59,7 +58,7 @@ Item {
         TextField {
             id: tfSyntax
             readOnly: true
-            Layout.minimumWidth: 140
+            //Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 3
         }
@@ -71,7 +70,7 @@ Item {
         TextField {
             id: tfStatus
             readOnly: true
-            Layout.minimumWidth: 140
+            //Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 3
         }
@@ -84,7 +83,7 @@ Item {
         TextField {
             id: tfAccess
             readOnly: true
-            Layout.minimumWidth: 140
+            //Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 3
         }
@@ -96,7 +95,7 @@ Item {
         TextField {
             id: tfReference
             readOnly: true
-            Layout.minimumWidth: 140
+            //Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 3
         }
@@ -108,7 +107,7 @@ Item {
         TextField {
             id: tfIndex
             readOnly: true
-            Layout.minimumWidth: 140
+            //Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 7
         }
@@ -120,7 +119,7 @@ Item {
         TextField {
             id: tfObjectID
             readOnly: true
-            Layout.minimumWidth: 140
+            //Layout.minimumWidth: 140
             Layout.fillWidth: true
             Layout.columnSpan: 7
         }
@@ -135,7 +134,7 @@ Item {
         TextArea {
             id: taDescription
 
-            Layout.minimumWidth: 140
+            //Layout.minimumWidth: 140
             Layout.maximumHeight: 80
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -147,36 +146,49 @@ Item {
 
     RowLayout {
         id: rowButton
-        anchors.topMargin: 12
+
         anchors.right: parent.right
-        anchors.rightMargin: 12
-        //anchors.left: parent.left
+        anchors.left: parent.left
         anchors.top: gridLayout.bottom
+
+        anchors.topMargin: 12
+        anchors.rightMargin: 12
+
+        Label {
+            id: label9
+            Layout.fillWidth: true
+        }
 
         Button {
             id: btGet
-            text: qsTr("Get")
-            enabled: false
+            //text: qsTr("Get")
+            iconSource: "qrc:/image/image/Get-32.png"
+            onClicked: {
+                commands.get();
+            }
         }
         Button {
             id: btGetNext
-            text: qsTr("Next")
-            enabled: false
-        }
-        Button {
-            id: btGetBulk
-            text: qsTr("Bulk")
-            enabled: false
+            //text: qsTr("GetNext")
+            iconSource: "qrc:/image/image/Get Next-32.png"
+            onClicked: {
+
+            }
+
         }
         Button {
             id: btSnmpWalk
-            text: qsTr("Walk")
-            enabled: false
+            //text: qsTr("SnmpWalk")
+            iconName: "SNMP WALK"
+            iconSource: "qrc:/image/image/Exercise-32.png"
         }
         Button {
             id: btSet
-            text: qsTr("Set")
-            enabled: false
+            //text: qsTr("Set")
+            iconSource: "qrc:/image/image/Setting-32.png"
+            onClicked: {
+
+            }
         }
     }
     TextArea{
@@ -196,20 +208,22 @@ Item {
     RowLayout {
         id: rowSaveClear
         anchors.topMargin: 8
-        anchors.rightMargin: 8
+        anchors.rightMargin: 12
         anchors.bottomMargin: 8
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
         Button {
             id: btClear
-            text: qsTr("Save")
-            enabled: false
+            //text: qsTr("Save")
+            iconSource: "qrc:/image/image/Save Filled-32.png"
+            enabled: true
         }
         Button {
             id: btSave
-            text: qsTr("Clear")
-            enabled: false
+            //text: qsTr("Clear")
+            iconSource: "qrc:/image/image/Broom-32.png"
+            enabled: true
         }
     }
 

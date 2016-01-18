@@ -7,6 +7,7 @@ function createImageIcon(objParent, fullPath) {
        +     'source: "image://provider/' + fullPath + '"; '
        +     'width: 16; '
        +     'height: 16; '
+       +     'anchors.verticalCenter: parent.verticalCenter; '
        + '}'
 
     var img = Qt.createQmlObject(imageString, objParent)
@@ -25,6 +26,7 @@ function createText(objParent, data) {
         +   'color: "' + data.textColor + '"; '
         +   'text: "' + data.value + '"; '
         +   'verticalAlignment: Text.AlignVCenter; '
+        +   'anchors.verticalCenter: parent.verticalCenter; '
         + '}'
     //console.log("textString: " + textString)
 

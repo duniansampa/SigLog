@@ -1,20 +1,20 @@
 #ifndef MIB_TREE_MODEL_HPP
 #define MIB_TREE_MODEL_HPP
 
-
-#include <Includes.h>
-
-#include <MibManager.h>
-
 #include <QStandardItemModel>
 #include <QMetaObject>
 #include <QMetaEnum>
-#include <MibManager.h>
+#include <QObject>
+
 
 class MibTreeModel : public QStandardItemModel
 {
-    Q_OBJECT
-    Q_ENUMS(Roles)
+   Q_OBJECT
+   Q_ENUMS(Roles)
+   Q_PROPERTY(QVariant firstIndex READ firstIndex)
+   Q_PROPERTY(NOTIFY loadMibChanged)
+   Q_PROPERTY(NOTIFY unLoadMibChanged)
+   Q_PROPERTY(QVariantList  modulesLoaded READ modulesLoaded )
 
     public:
         explicit MibTreeModel(QObject *parent = 0);
@@ -37,17 +37,63 @@ class MibTreeModel : public QStandardItemModel
         };
 
 
+        QVariant firstIndex() const
+        {
+            return this->_FirstIndex;
+        }
+        QVariantList modulesLoaded() const{
+            return this->_ModulesLoaded;
+        }
+        Q_INVOKABLE bool isIndexValid(const QModelIndex & index){
+            return index.isValid();
+        }
+        Q_INVOKABLE QModelIndex indexParent(const QModelIndex & index){
+            return index.parent();
+        }
+        Q_INVOKABLE bool hasChildren(const QModelIndex & parent = QModelIndex()){
+            return QStandardItemModel::hasChildren(parent);
+        }
+
+        Q_INVOKABLE bool hasIndex(int row, int column, const QModelIndex & parent = QModelIndex()){
+           return QStandardItemModel::hasIndex(row, column,  parent);
+        }
+        Q_INVOKABLE QModelIndex index(int row, int column, const QModelIndex & parent = QModelIndex()){
+            return QStandardItemModel::index(row, column, parent );
+        }
+
+        Q_INVOKABLE int rowCount(const QModelIndex & parent = QModelIndex()){
+            return QStandardItemModel::rowCount(parent);
+        }
+
+        Q_INVOKABLE bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex()){
+            return QStandardItemModel::removeRows(row, count, parent);
+        }
+
         QHash<int, QByteArray> roleNames() const override;
 
         Q_INVOKABLE void loadMibToThree(const QString & mibFileFullPath);
+        Q_INVOKABLE void unloadMibToThree(const QModelIndex & index);
 
         Q_INVOKABLE int role(const QByteArray &roleName) const;
         Q_INVOKABLE virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-        Q_INVOKABLE void addEntry( const QString& moduloName, const struct tree * tp, QString & oid);
+
+
+signals:
+      void loadMibChanged();
+      void unLoadMibChanged();
+public slots:
+        Q_INVOKABLE void addEntry(QString & moduleName );
 
 private:
-    QStandardItem* getBranch( const QString & parentOid);
+    void setNothingData(QStandardItem * entry, QString  label, int op = 0);
+
+    QVariantList _ModulesLoaded;
+    QStandardItem* getBranch(const QString & moduloName, const QString & parentOid);
     QHash<int, QByteArray> m_roleNameMapping;
+    QVector< struct tree *> _VecMibObjects;
+    QModelIndex _FirstIndex;
+
 };
+
 
 #endif // MIB_TREE_MODEL_HPP
