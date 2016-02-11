@@ -1,15 +1,14 @@
 QT += core
 QT -= gui
 
-
+CONFIG += c++11
 
 TARGET = index.cgi
-#target.path = /var/www/cgi-bin/
-#INSTALLS += target
 CONFIG += console
 CONFIG -= app_bundle
 
 TEMPLATE = app
+
 
 LIBS += -lcgicc
 

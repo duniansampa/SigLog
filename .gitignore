@@ -74,9 +74,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-
-*.o
+# QT Creator
+# ==============================
 */debug/*
-*.pro.user
-*Debug
-*Release
+build*Debug
+build*Release
