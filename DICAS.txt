@@ -1,0 +1,203 @@
+
+<<<Intalação do suite do software Net-SNMP>>>
+
+Antes de executar os softwares de monitoramentos e controles, ou iniciar desenvolvimento de software envolvendo o SNMP, instale as biblioteca  Net-SNMP.
+
+O suite Net-SNMP está disponível como um conjunto de pacotes RPM na distribuição de software fedora. 
+
+Um resumo sobre cada pacote e seu conteudo está a seguir.
+
+1. net-snmp: 
+A collection of SNMP protocol tools and libraries.
+SNMP (Simple Network Management Protocol) is a protocol used for
+network management. The NET-SNMP project includes various SNMP
+tools: an extensible agent, an SNMP library, tools for requesting
+or setting information from SNMP agents, tools for generating and
+handling SNMP traps, a version of the netstat command which uses
+SNMP, and a Tk/Perl mib browser. This package contains the snmpd
+and snmptrapd daemons, documentation, etc.
+
+You will probably also want to install the net-snmp-utils package, which contains NET-SNMP utilities.
+
+2. net-snmp-libs:
+The NET-SNMP runtime client libraries.
+The net-snmp-libs package contains the runtime client libraries for shared binaries and applications.
+
+3. net-snmp-utils:
+Network management utilities using SNMP, from the NET-SNMP project.
+The net-snmp-utils package contains various utilities for use with the
+NET-SNMP network management project.
+
+Install this package if you need utilities for managing your network using the SNMP protocol. You will also need to install the net-snmp package.
+
+4. net-snmp-devel:
+The net-snmp-devel package contains the development libraries and
+header files for use with the NET-SNMP project's network management tools.
+Install the net-snmp-devel package if you would like to develop applications for use with the NET-SNMP project's network management tools. You'll also need to have the net-snmp and net-snmp-utils packages installed.
+
+5. net-snmp-perl:
+The perl NET-SNMP module and the mib2c tool.
+The net-snmp-perl package contains the perl files to use SNMP from within Perl.
+
+Install the net-snmp-perl package, if you want to use mib2c or SNMP with perl.
+
+
+6. net-snmp-python:
+The Python 'netsnmp' module for the Net-SNMP
+The 'netsnmp' module provides a full featured, tri-lingual SNMP (SNMPv3, SNMPv2c, SNMPv1) client API. The 'netsnmp' module internalsrely on the Net-SNMP toolkit library.
+
+
+
+Para instalar esses pacotes, use o comando dnf da seguinte forma:
+
+	~]# dnf install net-snmp net-snmp-libs  net-snmp-utils net-snmp-devel
+
+Note que para instalar os pacote, deve-se logar como root para ter os privilégios de super usuário. 
+
+<<<Compilação do Net-SNMP>>>
+
+Após a instação do suite do software do Net-SNMP, foi feita a compitação do software que está sendo desenvolvido, mas indentificou-se com o seguinte erro: net-snmp-includes.h: No such file or directory. Esse erro foi mostrado pelo QT Creator, ambiente de desenvolvimento integrado usado para desenvolvimento de software.
+
+Usou-se os seguinte procedimentos para sanar o problema supracitado:
+
+
+1. Para perquisar  se o cache das biblioteca compartilhada inclui netsnmp, execute o seguinte comando. 
+ 
+	~]# sudo ldconfig -p | grep netsnmp
+
+O comando ldconfig é usado para manter um cache da biblioteca compartilhada. Esse cache é usado pelo sistema para mapear o nome da biblioteca compartilhada para o local do arquivo da biblioteca compartilhada correspondente. os cache são normalmente armazenados no /etc/ld.so.cache. Por padrão, os arquivos das bibliotecas compartilhadas são armazenados no /lib, /usr/lib, e poucos diretórios são mantidos no cache pelo ld config.
+Se um novo programa ou biblioteca podem estar instalados nos diretórios não padrão. Programa que precisa dessa biblioteca compartilhada provavelmente irá falhar, pois o sistema não sabe onde o arquivo se encontra.
+
+2. Executar o comando a seguir para encontrar o local onde estão as bibliotecas net-snmp: 
+	~]# find / -name libnetsnmp.so*
+O comando find vai retornar os locais onde estão as bibliotecas netsnmp.
+
+3. Finalmente o problema pode ser fixado executando sudo ldconfig e modificando /etc/ld.so.conf.d/libc.conf
+
+	~]# cat /etc/ld.so.conf
+   	  include ld.so.conf.d/*.conf
+	~]# cat > /etc/ld.so.conf.d/libc.conf <<EOF
+	 > /usr/local/lib
+	 > EO
+	~]# ldconfig
+	~]# python
+	 >>> import netsnmp
+   	 >>> exit()
+        ~]#
+         
+
+<<<Variaveis de ambiente>>>
+
+Há vários lugares em que arquivos de configuração podem ser encontrados e lidos. Por padrão, a aplicação procura por arquivo de configuração nos seguintes diretórios: /etc/snmp, /usr/share/snmp, /usr/lib(64)/snmp, e $HOME/.snmp. Neses diretórias as aplicações procuram por arquivos com ambas exentções conf e local.conf. Assim, há 8 lugares em que um arquivo de configuração pode existir para qualquer tipo de arquivo de configuração.
+
+O caminhos padrões acima podem ser sobrescritos pela variável de ambiente SNMPCONFPATH, separando os diretórios através de ponto e virgula.
+
+
+As aplicações vão ler os arquivos na seguinte ordem ou preferência:
+  a) arquivos na variável do ambiente SNMP_PERSISTENT_FILE
+  b) diretórios na variável do ambiente SNMPCONFPATH
+  c) diretório definido pela variável snmp.config persistentDir 
+  d) diretório no variável do ambiente SNMP_PERSISTENT_DIR 
+  e) diretório padrão /var/lib/net-snmp 
+
+
+<<< Matar o Daemom  >>
+
+Para matar o deamon, digite o comando a seguir:
+	
+	~]# kill -TERM snmpd
+
+<<< Exportar Variável de Ambiente >>>
+
+Vamos incluir o diretório onde deve ser procurado os arquivos de configuração na variável de ambiente. Também, será adicionado o caminho completo do diretório de configuração na variável do ambiente.
+
+	~]# export SNMPCONFPATH=$SNMPCONFPATH:$HOME/Git/SMC
+	~]# export SNMP_PERSISTENT_FILE=$SNMP_PERSISTENT_FILE:$HOME/Git/SMC/snmpd.conf
+
+
+ <<< Determinar se o servidor snmpd está em execução ou não >>>
+[http://www.cyberciti.biz/nixcraft/linux/docs/uniqlinuxfeatures/mrtg/]
+
+Execute o comando "ps" para verificar se o servidor snmp está em execução ou não.
+
+	~]# ps -aux |grep snmp
+	 Exemplo de saída: 
+	 root 5512 0.0 2.3 5578 ....
+
+Como alternativa, pode ser exutado o comando a seguir:
+	
+	~]# lsof -i:199
+	 Exemplo de saída: 
+	 COMMAND	PID	USER	TYPE	DEVICE	SIZE ....
+	 snmpd 		5512	root 	4u	IPv4  ....
+  
+Ou tente o comand onetstat:
+	
+	-]#z netstat -natv | grep ':199'
+	 Exemplo de saída:
+	 tcp	0	0 0.0.0.0:199	0.0.0.0:*  Lis
+
+Se você encontrou o serviço snmp executando ou ouvindo a porta 199, veja a etapa #3.
+Caso contrátio, inicie o serviço usando os seguintes comandos:
+
+	~]# service snmpd start
+
+Tenha certeza que o serviço se iniciou automaticamente, quando o linux volte (adicione o serviço snmpd)
+
+	~]# chkconfig --add snmpd
+
+Coloque o servico snmpd em execução:
+
+	~]# chkconfig snmpd on
+
+Entre com o comando a seguir para verificar o serviço está em execução:
+
+	~]# snmpwalk -v 1 localhost -c public system
+
+<<< AgentX Protocol >>>
+
+	~]# sudo snmpd -f -Lo -C --rwcommunity=public --master=agentx --agentXSocket=/tmp/agentx/master
+
+
+
+
+
+
+<<< Instalar dependecias de QT >>>
+
+        ~]# sudo dnf install qt5-qtbase qt5-qtbase-devel qt5-qtdeclarative qt5-qtdeclarative-devel qt5-qtquickcontrols qt5-qtgraphicaleffects
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<<< Envio de Comando >>>
+
+
+
+
+
+
+
+
+<<< Build-in Test >>>
+
+<<< Build-In Report >>>
+
+
+<<< Self- Test>>>
+
+
+<< Trasferencia de Arquivo e Pacote >>
+
+<< Intalação de Software >>
+
