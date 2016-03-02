@@ -36,7 +36,7 @@
 #include <siglog/agent/agent_callbacks.h>
 #include <siglog/agent/agent_trap.h>
 #include <siglog/agent/mib_module_config.h>
-#include "net-snmp/agent/sysORTable.h"
+#include "siglog/agent/sysORTable.h"
 
 #ifdef USING_NOTIFICATION_LOG_MIB_NOTIFICATION_LOG_MODULE
 #   include "notification-log-mib/notification_log.h"

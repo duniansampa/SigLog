@@ -17,7 +17,7 @@
 #include <siglog/agent/table.h>
 #include <siglog/agent/table_data.h>
 #include <siglog/agent/table_dataset.h>
-#include "net-snmp/agent/sysORTable.h"
+#include "siglog/agent/sysORTable.h"
 #include "notification_log.h"
 
 netsnmp_feature_require(register_ulong_instance_context)

@@ -143,9 +143,9 @@ PERFORMANCE OF THIS SOFTWARE.
 #include "snmpd.h"
 #include "agentx/agentx_config.h"
 #include "agentx/subagent.h"
-#include "net-snmp/agent/all_helpers.h"
+#include "siglog/agent/all_helpers.h"
 #include "agent_module_includes.h"
-#include "net-snmp/library/container.h"
+#include "siglog/library/container.h"
 
 #if defined(NETSNMP_USE_OPENSSL) && defined(HAVE_LIBSSL)
 #include <openssl/ssl.h>

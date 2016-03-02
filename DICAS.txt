@@ -201,3 +201,12 @@ Entre com o comando a seguir para verificar o serviço está em execução:
 
 << Intalação de Software >>
 
+
+<< Openssl >>
+	~]# sudo dnf install openssl-devel
+
+
+<< RPMLIB >>
+
+https://www.rpmfind.net/linux/rpm2html/search.php?query=kobo-rpmlib
+

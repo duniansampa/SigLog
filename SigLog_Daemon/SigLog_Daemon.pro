@@ -21,9 +21,15 @@ unix {
 }
 
 SOURCES += \
-    main.c
+    options.cpp \
+    signals.cpp \
+    siglogd.cpp \
+    main.cpp
 
 HEADERS += \
-    snmpd.h
+    options.h \
+    signals.h \
+    siglogd.h \
+    includes.h
 
 DISTFILES +=

@@ -13,7 +13,7 @@
  */
 /*
  * Portions of this file are copyrighted by:
- * Copyright © 2003 Sun Microsystems, Inc. All rights reserved.
+ * Copyright ï¿½ 2003 Sun Microsystems, Inc. All rights reserved.
  * Use is subject to license terms specified in the COPYING file
  * distributed with the Net-SNMP package.
  */
@@ -580,7 +580,7 @@
 /* #undef HAVE_NLIST64 */
 
 /* Define to 1 if you have the <nlist.h> header file. */
-#define HAVE_NLIST_H 1
+//#define HAVE_NLIST_H 0
 
 /* Define to 1 if the system has the type `off64_t'. */
 #define HAVE_OFF64_T 1
@@ -676,7 +676,7 @@
 #define HAVE_RPM_RPMFILEUTIL_H 1
 
 /* Define to 1 if you have the <rpm/rpmlib.h> header file. */
-#define HAVE_RPM_RPMLIB_H 1
+,,00#define HAVE_RPM_RPMLIB_H 1
 
 /* Define to 1 if you have the <rpm/rpmts.h> header file. */
 #define HAVE_RPM_RPMTS_H 1
@@ -1759,10 +1759,10 @@
 #define NETSNMP_MAX_PERSISTENT_BACKUPS 10
 
 /* define the system type include file here */
-#define NETSNMP_SYSTEM_INCLUDE_FILE "net-snmp/system/linux.h"
+#define NETSNMP_SYSTEM_INCLUDE_FILE "siglog/system/linux.h"
 
 /* define the machine (cpu) type include file here */
-#define NETSNMP_MACHINE_INCLUDE_FILE "net-snmp/machine/generic.h"
+#define NETSNMP_MACHINE_INCLUDE_FILE "siglog/machine/generic.h"
 
 /* define the UDP buffer defaults undefined means use the OS buffers
  * by default */

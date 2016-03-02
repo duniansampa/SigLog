@@ -31,7 +31,7 @@ unix {
      target.path    = ./
 
     #target.files += $${OUT_PWD}/siglogmib.so.1.0.0
-    target.extra = cd   $${libDir}; \
+    target.extra = @cd   $${libDir}; \
                    sudo rm $${objLink} $${obj}; \
                    cd -; \
                    echo "---- Copiando arquivos...----"; \
