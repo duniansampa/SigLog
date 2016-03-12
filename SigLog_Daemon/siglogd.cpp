@@ -15,7 +15,7 @@ int snmp_input(int, netsnmp_session *, int, netsnmp_pdu *,
 static void SnmpTrapNodeDown(void);
 static int  receive(void);
 
-
+extern void send_easy_trap(int, int);
 static void SnmpTrapNodeDown(void)
 {
     send_easy_trap(SNMP_TRAP_ENTERPRISESPECIFIC, 2);
@@ -143,7 +143,9 @@ int main_aux(int argc, char *argv[])
 
         //start library
 
-        init_snmp(opt.appName().toStdString().c_str());
+        char * appname = strdup(opt.appName().toStdString().c_str());
+
+        init_snmp(appname);
 
         if ((ret = init_master_agent()) != 0) {
 

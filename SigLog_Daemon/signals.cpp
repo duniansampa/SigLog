@@ -37,7 +37,7 @@ void Signals::reconfig(int a)
 }
 
 
-extern "C" void     dump_registry(void);
+extern  void     dump_registry(void);
 
 void Signals::dump(int a)
 {

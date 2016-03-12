@@ -676,7 +676,7 @@
 #define HAVE_RPM_RPMFILEUTIL_H 1
 
 /* Define to 1 if you have the <rpm/rpmlib.h> header file. */
-,,00#define HAVE_RPM_RPMLIB_H 1
+#define HAVE_RPM_RPMLIB_H 1
 
 /* Define to 1 if you have the <rpm/rpmts.h> header file. */
 #define HAVE_RPM_RPMTS_H 1
@@ -2083,7 +2083,7 @@
  * Header and source files should only test against NETSNMP_USE_INLINE:
  *
  *   #ifdef NETSNMP_USE_INLINE
- *   NETSNMP_INLINE function(int parm) { return parm -1; }
+ *    function(int parm) { return parm -1; }
  *   #endif
  *
  * Functions which should be static, regardless of whether or not inline
@@ -2094,7 +2094,7 @@
  *
  * NOT like this:
  *
- *    static NETSNMP_INLINE function(int parm) { return parm -1; }
+ *    static  function(int parm) { return parm -1; }
  *
  */
 #ifdef NETSNMP_BROKEN_INLINE
@@ -2109,13 +2109,13 @@
 #if NETSNMP_ENABLE_INLINE && !defined(NETSNMP_NO_INLINE)
 #   define NETSNMP_USE_INLINE 1
 #   ifndef NETSNMP_INLINE
-#      define NETSNMP_INLINE inline
+#      define  NETSNMP_INLINE inline
 #   endif
 #   ifndef NETSNMP_STATIC_INLINE
 #      define NETSNMP_STATIC_INLINE static inline
 #   endif
 #else
-#   define NETSNMP_INLINE 
+#   define  
 #   define NETSNMP_STATIC_INLINE static
 #endif
 

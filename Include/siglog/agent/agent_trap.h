@@ -1,9 +1,9 @@
 #ifndef AGENT_TRAP_H
 #define AGENT_TRAP_H
 
-#ifdef __cplusplus
-extern          "C" {
-#endif
+//#ifdef __cplusplus
+//extern          "C" {
+//#endif
 
 struct agent_add_trap_args {
     netsnmp_session *ss;
@@ -48,7 +48,7 @@ netsnmp_variable_list *convert_v1_to_v2(netsnmp_pdu *);
 netsnmp_pdu    *convert_v2pdu_to_v1(netsnmp_pdu *);
 netsnmp_pdu    *convert_v1pdu_to_v2(netsnmp_pdu *);
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 #endif                          /* AGENT_TRAP_H */

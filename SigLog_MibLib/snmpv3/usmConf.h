@@ -3,6 +3,10 @@
 
 #include <siglog/library/snmpusm.h>
 config_belongs_in(agent_module)
-extern void     init_usmConf(void);
+
+
+void     init_usmConf(void);
+
+
 
 #endif  /* _MIBGROUP_USMCONF_H */

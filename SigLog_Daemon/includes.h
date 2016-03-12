@@ -76,4 +76,7 @@ netsnmp_feature_want(logging_syslog)
 extern int      netsnmp_running;
 extern int      snmp_dump_packet;
 
+
+
+
 #endif // INCLUDES_H

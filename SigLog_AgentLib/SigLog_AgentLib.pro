@@ -13,7 +13,7 @@ LIBS +=  -lsiglog -lm
 
 unix {
     VERSION  = 1.0.0    # major.minor.patch
-    DEFINES += SIGLOG_AGENTLIB_LIBRARY
+    DEFINES += SIGLOG_AGENTLresultadoIB_LIBRARY
     INCLUDEPATH += "$$PWD/../Include"
     INCLUDEPATH += "$$PWD/../Agent"
     INCLUDEPATH += "$$PWD/../SigLog_MibLib"
@@ -53,52 +53,52 @@ unix {
 
 HEADERS +=
 
-SOURCES +=  all_helpers.c \
-        baby_steps.c \
-        bulk_to_next.c \
-        cache_handler.c \
-        debug_handler.c \
-        instance.c \
-        mode_end_call.c \
-        multiplexer.c \
-        null.c \
-        old_api.c \
-        read_only.c \
-        row_merge.c \
-        scalar.c \
-        scalar_group.c \
-        serialize.c \
-        snmp_get_statistic.c \
-        stash_cache.c \
-        stash_to_next.c \
-        table.c \
-        table_array.c \
-        table_container.c \
-        table_data.c \
-        table_dataset.c \
-        table_iterator.c \
-        table_row.c \
-        table_tdata.c \
-        watcher.c \
-        ../Agent/agent_handler.c \
-        ../Agent/agent_index.c \
-        ../Agent/agent_read_config.c \
-        ../Agent/agent_registry.c \
-        ../Agent/agent_sysORTable.c \
-        ../Agent/agent_trap.c \
-        ../Agent/kernel.c \
-        ../Agent/snmp_agent.c \
-        ../Agent/snmp_vars.c \
-        ../SigLog_MibLib/snmpv3/usmConf.c \
-        ../SigLog_MibLib/agentx/master.c \
-        ../SigLog_MibLib/agentx/subagent.c \
-        ../SigLog_MibLib/utilities/execute.c \
-        ../SigLog_MibLib/utilities/iquery.c \
-        ../SigLog_MibLib/mibII/vacm_conf.c \
-        ../SigLog_MibLib/agentx/protocol.c \
-        ../SigLog_MibLib/agentx/client.c \
-        ../SigLog_MibLib/agentx/master_admin.c \
-        ../SigLog_MibLib/agentx/agentx_config.c
+SOURCES +=  all_helpers.cpp \
+        baby_steps.cpp \
+        bulk_to_next.cpp \
+        cache_handler.cpp \
+        debug_handler.cpp \
+        instance.cpp \
+        mode_end_call.cpp \
+        multiplexer.cpp \
+        null.cpp \
+        old_api.cpp \
+        read_only.cpp \
+        row_merge.cpp \
+        scalar.cpp \
+        scalar_group.cpp \
+        serialize.cpp \
+        snmp_get_statistic.cpp \
+        stash_cache.cpp \
+        stash_to_next.cpp \
+        table.cpp \
+        table_array.cpp \
+        table_container.cpp \
+        table_data.cpp \
+        table_dataset.cpp \
+        table_iterator.cpp \
+        table_row.cpp \
+        table_tdata.cpp \
+        watcher.cpp \
+        agent_handler.cpp \
+        agent_index.cpp \
+        agent_read_config.cpp \
+        agent_registry.cpp \
+        agent_sysORTable.cpp \
+        agent_trap.cpp \
+        kernel.cpp \
+        snmp_agent.cpp \
+        snmp_vars.cpp \
+        ../SigLog_MibLib/snmpv3/usmConf.cpp \
+        ../SigLog_MibLib/agentx/master.cpp \
+        ../SigLog_MibLib/agentx/subagent.cpp \
+        ../SigLog_MibLib/utilities/execute.cpp \
+        ../SigLog_MibLib/utilities/iquery.cpp \
+        ../SigLog_MibLib/mibII/vacm_conf.cpp \
+        ../SigLog_MibLib/agentx/protocol.cpp \
+        ../SigLog_MibLib/agentx/client.cpp \
+        ../SigLog_MibLib/agentx/master_admin.cpp \
+        ../SigLog_MibLib/agentx/agentx_config.cpp
 
 
 DISTFILES += \

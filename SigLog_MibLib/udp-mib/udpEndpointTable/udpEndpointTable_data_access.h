@@ -35,9 +35,7 @@ extern          "C" {
      */
 
 
-    int
-        udpEndpointTable_init_data(udpEndpointTable_registration *
-                                   udpEndpointTable_reg);
+    int udpEndpointTable_init_data(udpEndpointTable_registration *udpEndpointTable_reg);
 
 
     /*

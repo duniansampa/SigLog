@@ -210,3 +210,20 @@ Entre com o comando a seguir para verificar o serviço está em execução:
 
 https://www.rpmfind.net/linux/rpm2html/search.php?query=kobo-rpmlib
 
+
+<< qDebug não imprime nada >>
+
+	$ cat /etc/xdg/QtProject/qtlogging.ini
+	[Rules]
+	*.debug=false
+
+	one could use something like this:
+
+	[Rules]
+	*.debug=true
+	qt.*.debug=false
+     
+     link: http://stackoverflow.com/questions/30583577/qt-qdebug-not-working-with-qconsoleapplication-or-qapplication
+
+
+

@@ -11,9 +11,9 @@
 #ifndef NETSNMP_SWRUN_H
 #define NETSNMP_SWRUN_H
 
-#ifdef  __cplusplus
-extern "C" {
-#endif
+//#ifdef  __cplusplus
+//extern "C" {
+//#endif
 
 
     /*-*****************************************************************
@@ -94,9 +94,9 @@ extern "C" {
 #define NETSNMP_SWRUN_DONT_FREE_ITEMS    0x00000002
 /*#define NETSNMP_SWRUN_xx                0x00000004 */
 
-#ifdef  __cplusplus
-}
-#endif
+//#ifdef  __cplusplus
+//}
+//#endif
 
 
 #endif /* NETSNMP_SWRUN_H */
